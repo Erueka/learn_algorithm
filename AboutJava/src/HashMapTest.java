@@ -1,5 +1,6 @@
 import java.util.HashMap;
 import java.util.Hashtable;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
@@ -45,9 +46,22 @@ public class HashMapTest {
         hm.put(new A(4), "4");
         hm.put(new A(5), "5");
 
+        System.out.println(hm);
         System.out.println("遍历：");
         for (Map.Entry<A,String> entry : hm.entrySet()){
             System.out.println("key="+entry.getKey()+"\tvalue="+entry.getValue());
+        }
+
+        //LinkedHashMap会记住key_value的添加顺序。
+        LinkedHashMap<String, Integer> lhm = new LinkedHashMap();
+        lhm.put("语文", 90);
+        lhm.put("政治", 20);
+        lhm.put("数学", 99);
+        for (Object key : lhm.keySet()){
+            System.out.println(key+"-->"+lhm.get(key));
+        }
+        for(Map.Entry<String, Integer> entry : lhm.entrySet()){
+            System.out.println(entry.getKey()+"?????"+entry.getValue());
         }
     }
 }
