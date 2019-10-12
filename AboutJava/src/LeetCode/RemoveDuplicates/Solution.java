@@ -35,9 +35,23 @@ public class Solution {
         return k+1;
     }
 
+    // 问题80， 重复元素最多包含两个
+    public static int removeDuplicates3(int[] nums) {
+        int k = 0;  // 已经插入元素的位置
+        for (int i = 1; i<nums.length;) {
+            if (nums[i] != nums[k])
+                nums[++k] = nums[i++];
+            else{
+                nums[++k] = nums[i++];
+                while (i < nums.length && nums[i] == nums[k])  i++;
+            }
+        }
+        return k+1;
+    }
+
     public static void main(String[] args) {
-        int[] nums = {0,0,1,1,1,2,2,3,3,4};
-        System.out.println(removeDuplicates2(nums)+"\n");
+        int[] nums = {0,0,1,1,1,1,2,3,3};
+        System.out.println(removeDuplicates3(nums)+"\n");
         for (int num : nums)
             System.out.println(num);
     }
