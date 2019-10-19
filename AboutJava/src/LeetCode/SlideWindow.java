@@ -55,7 +55,7 @@ public class SlideWindow {
     输出:
     [0, 6]
 
-     */
+
     public static List<Integer> findAnagrams(String s, String p) {
         List<Integer> res = new ArrayList<>();
 
@@ -95,8 +95,54 @@ public class SlideWindow {
         return res;
     }
 
-    public static void main(String[] args) {
-        List<Integer> ans = findAnagrams("leetcode", "ee");
-        System.out.println(ans);
+
+    */
+
+
+    /*
+    Lettcode 76
+    给你一个字符串 S、一个字符串 T，请在字符串 S 里面找出：包含 T 所有字母的最小子串。
+     */
+    public String minWindow(String s, String p) {
+        int min = Integer.MAX_VALUE;
+        int start = 0;
+        if (s.length()==0 || p.length()==0 || s.length()<p.length())
+            return "";
+        // 如何确定窗口内的字符满足要求
+        Map<Character, Integer> needs = new HashMap<>();     // 记录p中包含的字符及出现次数
+        Map<Character, Integer> window = new HashMap<>();    // 记录窗口中包含的字符及出现次数
+        for (char key : p.toCharArray())
+            needs.put(key, needs.getOrDefault(key, 0) + 1); //初始化needs
+
+        // 当window[i] >= needs[i]时该字符就满足条件
+        // 当满足条件的字符数count==p.length时就时=是符合要求的window了
+        int count = 0;
+
+        int left = 0;
+        int right = -1;
+        while (left < s.length() && right + 1 < s.length()) {
+            // 不断扩张right，知道满足条件，再缩小left
+            char next_right = s.charAt(right + 1);
+            if (needs.containsKey(next_right)) {    // 如果是需要的做记录，否则继续看下一个
+                window.put(next_right, window.getOrDefault(next_right, 0) + 1); // windows[next_right]++
+                count += window.get(next_right).equals(needs.get(next_right)) ? 1 : 0;
+            }
+            right++;
+
+            // 注意这里是needs的size而不是p的len，因为p中可能包含重复字符，而count不区分重复字符
+            while (count == needs.size()) {  // 已经找到满足条件的窗口，需要优化窗口
+                if (right-left+1 < min){
+                    min = right-left+1;
+                    start = left;
+                }
+                char now_left = s.charAt(left);
+                if (needs.containsKey(now_left)) {
+                    window.put(now_left,window.get(now_left)-1);
+                    count += window.get(now_left) < needs.get(now_left) ? -1 : 0;
+                }
+                left++;
+            }
+        }
+        return min != Integer.MAX_VALUE ? s.substring(start,start+min) : "";
     }
 }
