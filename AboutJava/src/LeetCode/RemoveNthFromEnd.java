@@ -8,7 +8,7 @@ public class RemoveNthFromEnd {
     class ListNode {
         int val;
         ListNode next;
-        ListNode(int x) {val=x}
+        ListNode(int x) {val=x;}
     }
 
 //    public ListNode removeNthFromEnd(ListNode head, int n) {
@@ -33,8 +33,8 @@ public class RemoveNthFromEnd {
     public ListNode removeNthFromEnd(ListNode head, int n) {
         ListNode dumy = new ListNode(0);
         dumy.next = head;
-        ListNode first = dummy;
-        ListNode second = dummy;
+        ListNode first = dumy;
+        ListNode second = dumy;
         while (n!=0){
             n--;
             first=first.next;
