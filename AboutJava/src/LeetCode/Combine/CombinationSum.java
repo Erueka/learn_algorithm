@@ -12,7 +12,7 @@ import java.util.Stack;
 public class CombinationSum {
     List<List<Integer>> res = new ArrayList<>();
 
-    public List<List<Integer>> combinationSum(int[] candidates, int target) {
+    public List<List<Integer>> combinationSum2(int[] candidates, int target) {
         if (candidates.length == 0)
             return res;
         Arrays.sort(candidates);
@@ -26,8 +26,10 @@ public class CombinationSum {
             return;
         }
         for (int i = start; i < candidates.length && target - candidates[i] >= 0; i++) {
+            if (i>0 && candidates[i]==candidates[i-1])
+                continue;
             s.push(candidates[i]);
-            generateCombine(candidates, target - candidates[i], i, s);   // 元素可以重复，所以还是i
+            generateCombine(candidates, target - candidates[i], i + 1, s);   // 元素可以重复，所以还是i
             s.pop();
         }
     }
